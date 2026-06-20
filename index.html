@@ -1289,24 +1289,21 @@
        REDUCED MOTION
        ============================ */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+      .grain, .bg-layer .orb, .bg-layer .glow-ring,
+      .floating-shapes .shape,
+      .hero-visual .box-ring .ring,
+      .hero-visual .box-ring .ring-glow,
+      .hero-visual .box-ring .hex,
+      .scroll-indicator .mouse .wheel,
+      .hero h1 .line span,
+      .hero-tag, .hero p, .hero-actions,
+      .hero-visual {
+        animation: none !important;
       }
-      html { scroll-behavior: auto; }
-      .grain { animation: none; }
-      .bg-layer .orb { animation: none; }
-      .bg-layer .glow-ring { animation: none; }
-      .floating-shapes .shape { animation: none; }
-      .hero-visual .box-ring .ring { animation: none; }
-      .hero-visual .box-ring .ring-glow { animation: none; }
-      .hero-visual .box-ring .hex { animation: none; }
-      .scroll-indicator .mouse .wheel { animation: none; }
-      .hero h1 .line span { animation: none; opacity: 1; transform: none; }
-      .hero-tag, .hero p, .hero-actions { animation: none; opacity: 1; transform: none; }
+      .hero h1 .line span { opacity: 1; transform: none; }
+      .hero-tag, .hero p, .hero-actions { opacity: 1; transform: none; }
       .reveal { opacity: 1; transform: none; }
-      .hero-visual { animation: none; opacity: 1; transform: none; }
+      .hero-visual { opacity: 1; transform: none; }
     }
 
     /* ============================
@@ -1766,10 +1763,9 @@
   }, { threshold: 0.5 });
   document.querySelectorAll('.count').forEach(el => counterObserver.observe(el));
 
-  // Skip canvas particles if user prefers reduced motion
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-
-  // Particle system (embers)
+  // Particle system (embers) — skip if user prefers reduced motion
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced) {
   const canvas = document.getElementById('particles-canvas');
   const ctx = canvas.getContext('2d');
   let w, h, particles = [];
